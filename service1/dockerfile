@@ -1,0 +1,10 @@
+FROM node:latest
+
+COPY package.json /app/
+COPY server.js /app/
+
+WORKDIR /app
+
+RUN npm install --force
+
+CMD ["node", "server.js"]

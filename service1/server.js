@@ -3,6 +3,7 @@ const express = require('express');
 const { graphqlHTTP } = require('express-graphql');
 const { buildSchema } = require('graphql');
 const mongoose = require("mongoose");
+const cors = require("cors");
 
 // Setup Database
 const db_url = "mongodb+srv://admin:admin@coe453project.b7gjegg.mongodb.net/?retryWrites=true&w=majority&appName=coe453project";
@@ -50,6 +51,7 @@ const root = {
 };
 
 const app = express();
+app.use(cors());
 
 app.use(
   '/',

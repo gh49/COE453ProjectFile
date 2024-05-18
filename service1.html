@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GraphQL API Fetch Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        input, button {
+            padding: 10px;
+            font-size: 16px;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Fetch Data from GraphQL API</h1>
+    <form id="dataForm">
+        <input type="text" id="inputString" placeholder="Enter foodId" required>
+        <input type="number" id="inputInt" placeholder="Enter weight" required>
+        <button type="submit">Get Calories!</button>
+    </form>
+    <div class="result" id="result"></div>
+
+    <script>
+        document.getElementById('dataForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const inputString = document.getElementById('inputString').value;
+            const inputInt = parseInt(document.getElementById('inputInt').value);
+
+            const query = `
+            mutation {
+                getCalories(foodId: "${inputString}", weight: ${inputInt})
+            }
+            `;
+
+            const variables = {
+                inputString: inputString,
+                inputInt: inputInt
+            };
+
+            try {
+                const response = await fetch('https://api-details-b0a51l0l.uc.gateway.dev/food/add', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({name: "hi", calories: 44})
+                });
+
+                const responseBody = await response.json();
+
+                if (responseBody.errors) {
+                    document.getElementById('result').textContent = 'Error: ' + responseBody.errors[0].message;
+                } else {
+                    const result = JSON.stringify(responseBody);
+                    document.getElementById('result').textContent = 'Calories: ' + result;
+                }
+            } catch (error) {
+                document.getElementById('result').textContent = 'Error: ' + error.message;
+            }
+        });
+    </script>
+
+</body>
+</html>

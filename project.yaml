@@ -1,0 +1,73 @@
+swagger: "2.0"
+info:
+  title: projectapi
+  description: API for hw2
+  version: 1.0.0
+
+host: projectapi.apigateway.dev-splice-415319.cloud.goog
+basePath: /
+schemes:
+  - https
+  - http
+
+paths:
+  /food:
+    get:
+      operationId: getFood
+      summary: Fetch all food from DB
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+      x-google-backend:
+        address: https://us-central1-dev-splice-415319.cloudfunctions.net/getFood
+      x-google-extensions:
+        x-google-allow-cors: true
+    options:
+      operationId: corsGetFood
+      x-google-backend:
+        address: https://us-central1-dev-splice-415319.cloudfunctions.net/getFood
+      responses:
+        '200':
+          description: A successful response
+  /food/add:
+    post:
+      operationId: postFood
+      summary: Add food to DB
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+      x-google-backend:
+        address: https://us-central1-dev-splice-415319.cloudfunctions.net/postFood
+      x-google-extensions:
+        x-google-allow-cors: true
+    options:
+      operationId: corsPostFood
+      x-google-backend:
+        address: https://us-central1-dev-splice-415319.cloudfunctions.net/postFood
+      responses:
+        '200':
+          description: A successful response
+  /calculate:
+    post:
+      operationId: calculate
+      summary: get the calories of x grams of food
+      produces:
+        - application/json
+      responses:
+        200:
+          description: OK
+      x-google-backend:
+        address: https://calculate-w7tluuo33a-uc.a.run.app
+      x-google-extensions:
+        x-google-allow-cors: true
+    options:
+      operationId: corsCalculate
+      x-google-backend:
+        address: https://calculate-w7tluuo33a-uc.a.run.app
+      responses:
+        '200':
+          description: A successful response
